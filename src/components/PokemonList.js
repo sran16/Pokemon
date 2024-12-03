@@ -14,7 +14,8 @@ const PokemonList = () => {
         {
           name: "Pikachu",
           type: "Électrique",
-          image: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+          image:
+            "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
         },
       ];
       setPokemons(initialPokemons);
@@ -24,15 +25,15 @@ const PokemonList = () => {
 
   // Ajouter un Pokémon (par exemple pour démonstration)
   const addPokemon = () => {
-  //   const newPokemon = {
-  //     name: "Bulbizarre",
-  //     type: "Plante/Poison",
-  //     image: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
-  //   };
-  //   const updatedPokemons = [...pokemons, newPokemon];
-  //   setPokemons(updatedPokemons);
-  //   localStorage.setItem("pokemons", JSON.stringify(updatedPokemons));
-   };
+    //   const newPokemon = {
+    //     name: "Bulbizarre",
+    //     type: "Plante/Poison",
+    //     image: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+    //   };
+    //   const updatedPokemons = [...pokemons, newPokemon];
+    //   setPokemons(updatedPokemons);
+    //   localStorage.setItem("pokemons", JSON.stringify(updatedPokemons));
+  };
 
   return (
     <div>
@@ -40,7 +41,14 @@ const PokemonList = () => {
       <button onClick={addPokemon}>Ajouter</button>
       <ul>
         {pokemons.map((pokemon, index) => (
-          <li key={index} style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+          <li
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "20px",
+            }}
+          >
             <img
               src={pokemon.image}
               alt={pokemon.name}
