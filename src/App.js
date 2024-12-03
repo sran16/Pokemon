@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Login from "./components/Login";
+import Pokemon from "./components/PokemonList";
+
 import "./App.css";
+import PokemonList from "./components/PokemonList";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,7 +19,7 @@ function App() {
       ) : (
         <div>
           <h1>Bienvenue {user}</h1>
-          {/*  la collection de Pokémon */}
+          <PokemonList/>
         </div>
       )}
     </div>
