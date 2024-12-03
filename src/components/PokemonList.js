@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import PokemonForm from "./PokemonForm";
+import EditPokemonForm from "./EditPokemonForm";
 
 function PokemonList({ pokemons, setPokemons, user }) {
   const [loading, setLoading] = useState(false);
+  const [editingPokemon, setEditingPokemon] = useState(null);
 
   useEffect(() => {
     const loadUserPokemons = () => {
@@ -25,6 +27,27 @@ function PokemonList({ pokemons, setPokemons, user }) {
     localStorage.setItem(`pokemons_${user}`, JSON.stringify(updatedPokemons));
   };
 
+  const handleDeletePokemon = (name) => {
+    const filteredPokemons = pokemons.filter(
+      (pokemon) => pokemon.name !== name
+    );
+    setPokemons(filteredPokemons);
+    localStorage.setItem(`pokemons_${user}`, JSON.stringify(filteredPokemons));
+  };
+
+  const handleEditPokemon = (pokemon) => {
+    setEditingPokemon(pokemon);
+  };
+
+  const handleSaveEdit = (oldName, updatedPokemon) => {
+    const updatedPokemons = pokemons.map((pokemon) =>
+      pokemon.name === oldName ? updatedPokemon : pokemon
+    );
+    setPokemons(updatedPokemons);
+    localStorage.setItem(`pokemons_${user}`, JSON.stringify(updatedPokemons));
+    setEditingPokemon(null);
+  };
+
   if (loading) {
     return <div>Chargement des Pokémon...</div>;
   }
@@ -40,11 +63,36 @@ function PokemonList({ pokemons, setPokemons, user }) {
               border: "1px solid #ccc",
               padding: "10px",
               borderRadius: "8px",
+              position: "relative",
             }}
           >
-            <img src={pokemon.image} alt={pokemon.name} />
-            <p>{pokemon.name}</p>
-            <p>Type: {pokemon.type}</p>
+            {editingPokemon?.name === pokemon.name ? (
+              <EditPokemonForm
+                pokemon={pokemon}
+                onSave={handleSaveEdit}
+                onCancel={() => setEditingPokemon(null)}
+              />
+            ) : (
+              <>
+                <img src={pokemon.image} alt={pokemon.name} />
+                <p>{pokemon.name}</p>
+                <p>Type: {pokemon.type}</p>
+                <div className="pokemon-actions">
+                  <button
+                    onClick={() => handleEditPokemon(pokemon)}
+                    className="edit-button"
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    onClick={() => handleDeletePokemon(pokemon.name)}
+                    className="delete-button"
+                  >
+                    X
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
