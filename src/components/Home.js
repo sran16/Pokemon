@@ -1,7 +1,14 @@
 // Home.js
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="homepage">
       <header className="homepage-header">
@@ -37,7 +44,7 @@ const Home = () => {
           </ol>
         </section>
         <div>
-          <button className="btn-start">
+          <button className="btn-start" onClick={handleStartClick}>
             Commencez votre aventure Pokémon dès maintenant !
           </button>
         </div>
