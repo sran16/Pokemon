@@ -1,7 +1,8 @@
 .App {
-  text-align: center;
   padding: 20px;
 }
+
+/* CSS Login */
 
 .login-form {
   max-width: 300px;
@@ -19,7 +20,7 @@
 
 .login-form button {
   padding: 10px;
-  background-color: #eabb2c;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -37,3 +38,86 @@
 
 
 
+
+/* CSS Home */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.homepage-header {
+  background-color: #ffcb05;
+  color: #2a75bb;
+  text-align: center;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.homepage-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.homepage-main {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feature,
+.steps {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.feature h2,
+.steps h2 {
+  color: #2a75bb;
+  margin-bottom: 10px;
+}
+
+.feature ul,
+.steps ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.feature ul li,
+.steps ol li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.homepage-footer {
+  background-color: #2a75bb;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto;
+}
+
+.homepage-footer p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.btn-start {
+  padding: 1.5rem;
+  border: none;
+  background-color: #2a75bb;
+  border-radius: 10rem;
+  color: white;
+}
