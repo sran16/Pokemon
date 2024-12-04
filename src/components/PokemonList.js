@@ -55,44 +55,29 @@ function PokemonList({ pokemons, setPokemons, user }) {
   return (
     <div>
       <h2>Vos Pokémon</h2>
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <div className="pokemon-list-container">
         {pokemons.map((pokemon, index) => (
           <div
             key={index}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "8px",
-              position: "relative",
-            }}
+            className="pokemon-list-item"
           >
-            {editingPokemon?.name === pokemon.name ? (
-              <EditPokemonForm
-                pokemon={pokemon}
-                onSave={handleSaveEdit}
-                onCancel={() => setEditingPokemon(null)}
-              />
-            ) : (
-              <>
-                <img src={pokemon.image} alt={pokemon.name} />
-                <p>{pokemon.name}</p>
-                <p>Type: {pokemon.type}</p>
-                <div className="pokemon-actions">
-                  <button
-                    onClick={() => handleEditPokemon(pokemon)}
-                    className="edit-button"
-                  >
-                    ✏️
-                  </button>
-                  <button
-                    onClick={() => handleDeletePokemon(pokemon.name)}
-                    className="delete-button"
-                  >
-                    X
-                  </button>
-                </div>
-              </>
-            )}
+            <img src={pokemon.image} alt={pokemon.name} />
+            <p>{pokemon.name}</p>
+            <p>Type: {pokemon.type}</p>
+            <div className="pokemon-actions">
+              <button
+                onClick={() => handleEditPokemon(pokemon)}
+                className="edit-button"
+              >
+                ✏️
+              </button>
+              <button 
+                onClick={() => handleDeletePokemon(pokemon.name)}
+                className="delete-button"
+              >
+                X
+              </button>
+            </div>
           </div>
         ))}
       </div>
