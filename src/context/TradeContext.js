@@ -1,37 +1,68 @@
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const TradeContext = createContext();
 
 export function TradeProvider({ children }) {
-  const [trades, setTrades] = useState([]);
+  const [trades, setTrades] = useState(() => {
+    const savedTrades = localStorage.getItem('trades');
+    return savedTrades ? JSON.parse(savedTrades) : [];
+  });
+
+  // Sauvegarder les trades dans localStorage quand ils changent
+  useEffect(() => {
+    localStorage.setItem('trades', JSON.stringify(trades));
+  }, [trades]);
 
   const proposeTrade = (fromUser, toUser, offeredPokemon, requestedPokemon) => {
     const newTrade = {
-      id: Date.now(),
+      id: Date.now().toString(),
       fromUser,
       toUser,
       offeredPokemon,
       requestedPokemon,
-      status: 'pending'
+      status: 'pending',
+      timestamp: new Date().toISOString()
     };
+
     setTrades(prevTrades => [...prevTrades, newTrade]);
   };
 
-  const respondToTrade = (tradeId, accepted) => {
+  const respondToTrade = (tradeId, response) => {
     setTrades(prevTrades =>
       prevTrades.map(trade =>
         trade.id === tradeId
-          ? { ...trade, status: accepted ? 'accepted' : 'rejected' }
+          ? { ...trade, status: response }
           : trade
       )
     );
   };
 
+  const getTradesForUser = (username) => {
+    return trades.filter(
+      trade => 
+        (trade.fromUser === username || trade.toUser === username) &&
+        trade.status === 'pending'
+    );
+  };
+
+  const value = {
+    trades,
+    proposeTrade,
+    respondToTrade,
+    getTradesForUser
+  };
+
   return (
-    <TradeContext.Provider value={{ trades, proposeTrade, respondToTrade }}>
+    <TradeContext.Provider value={value}>
       {children}
     </TradeContext.Provider>
   );
 }
 
-export const useTrade = () => useContext(TradeContext); 
+export function useTrade() {
+  const context = useContext(TradeContext);
+  if (!context) {
+    throw new Error('useTrade must be used within a TradeProvider');
+  }
+  return context;
+} 

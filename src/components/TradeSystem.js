@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTrade } from '../context/TradeContext';
 
-function TradeSystem({ currentUser, userPokemons }) {
-  const { trades, proposeTrade, respondToTrade } = useTrade();
+function TradeSystem({ currentUser, userPokemons, onClose }) {
+  const { proposeTrade } = useTrade();
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [otherUsers, setOtherUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [requestedPokemon, setRequestedPokemon] = useState(null);
-
-  // Charger les autres utilisateurs depuis le localStorage
 
   useEffect(() => {
     const loadOtherUsers = () => {
@@ -27,26 +25,22 @@ function TradeSystem({ currentUser, userPokemons }) {
   }, [currentUser]);
 
   const handleProposeTrade = () => {
-    if (selectedPokemon && selectedUser && requestedPokemon) {
-      proposeTrade(currentUser, selectedUser.username, selectedPokemon, requestedPokemon);
-
-      // Réinitialiser les sélections
-
-      setSelectedPokemon(null);
-      setSelectedUser(null);
-      setRequestedPokemon(null);
+    if (selectedUser && requestedPokemon && selectedPokemon) {
+      proposeTrade(
+        currentUser,
+        selectedUser.username,
+        selectedPokemon,
+        requestedPokemon
+      );
+      onClose();
+      alert('Proposition d\'échange envoyée !');
     }
   };
 
   return (
     <div className="trade-system">
-      <h2>Système d'échange de Pokémon</h2>
-      
-      {/* Section pour proposer un échange */}
       <div className="trade-proposal">
         <h3>Proposer un échange</h3>
-        
-        {/* Sélection de votre Pokémon */}
         <div className="pokemon-selection">
           <h4>Sélectionnez votre Pokémon à échanger</h4>
           <div className="pokemon-grid">
@@ -104,37 +98,10 @@ function TradeSystem({ currentUser, userPokemons }) {
         <button 
           className="propose-trade-btn"
           onClick={handleProposeTrade}
-          disabled={!selectedPokemon || !selectedUser || !requestedPokemon}
+          disabled={!selectedUser || !requestedPokemon}
         >
           Proposer l'échange
         </button>
-      </div>
-
-      {/* Section des propositions reçues */}
-      <div className="trade-offers">
-        <h3>Propositions reçues</h3>
-        {trades
-          .filter(trade => trade.toUser === currentUser && trade.status === 'pending')
-          .map(trade => (
-            <div key={trade.id} className="trade-offer">
-              <p>{trade.fromUser} propose d'échanger :</p>
-              <div className="trade-pokemon">
-                <div>
-                  <img src={trade.offeredPokemon.image} alt={trade.offeredPokemon.name} />
-                  <p>{trade.offeredPokemon.name}</p>
-                </div>
-                <span>⇄</span>
-                <div>
-                  <img src={trade.requestedPokemon.image} alt={trade.requestedPokemon.name} />
-                  <p>{trade.requestedPokemon.name}</p>
-                </div>
-              </div>
-              <div className="trade-actions">
-                <button onClick={() => respondToTrade(trade.id, true)}>Accepter</button>
-                <button onClick={() => respondToTrade(trade.id, false)}>Refuser</button>
-              </div>
-            </div>
-          ))}
       </div>
     </div>
   );

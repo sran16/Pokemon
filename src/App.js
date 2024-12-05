@@ -1,10 +1,14 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { useState } from "react";
 import Login from "./components/Login";
 import PokemonList from "./components/PokemonList";
 import Home from "./components/Home";
-import TradeSystem from "./components/TradeSystem";
-import { TradeProvider } from './context/TradeContext';
+import { TradeProvider } from "./context/TradeContext";
 import "./App.css";
 
 function App() {
@@ -24,6 +28,14 @@ function App() {
     <TradeProvider>
       <Router>
         <div className="App">
+          {user && (
+            <div className="header">
+              <div className="user-welcome">{user}</div>
+              <button onClick={handleLogout} className="logout-button">
+                Déconnexion
+              </button>
+            </div>
+          )}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
@@ -32,20 +44,10 @@ function App() {
               element={
                 user ? (
                   <div>
-                    <div className="header">
-                      <h1>Bienvenue {user}</h1>
-                      <button onClick={handleLogout} className="logout-button">
-                        Déconnexion
-                      </button>
-                    </div>
                     <PokemonList
                       pokemons={userPokemons}
                       setPokemons={setUserPokemons}
                       user={user}
-                    />
-                    <TradeSystem 
-                      currentUser={user}
-                      userPokemons={userPokemons}
                     />
                   </div>
                 ) : (
