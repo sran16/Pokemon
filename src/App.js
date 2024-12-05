@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import PokemonList from "./components/PokemonList";
 import Home from "./components/Home";
 import { TradeProvider } from "./context/TradeContext";
+import NotFound from "./components/NotFound";
 import "./App.css";
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                 )
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

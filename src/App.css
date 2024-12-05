@@ -774,3 +774,31 @@ body {
   background-color: #f44336;
   color: white;
 }
+
+.not-found {
+  text-align: center;
+  padding: 50px;
+  color: #2a75bb;
+}
+
+.not-found h1 {
+  font-size: 72px;
+  margin: 0;
+  color: #ffcb05;
+}
+
+.not-found h2 {
+  margin: 20px 0;
+}
+
+.not-found img {
+  width: 200px;
+  margin-top: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
